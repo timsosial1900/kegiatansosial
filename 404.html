@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Halaman tidak ditemukan</title>
+<script>
+// GitHub Pages menampilkan file ini untuk alamat yang tidak ada.
+// Alamat rapi /s/<slug> dan /kegiatan/<uuid> diteruskan ke bentuk ?k= dan ?id=.
+(function () {
+  var path = location.pathname;
+  var match = /^(.*)\/s\/([A-Za-z0-9-]{1,50})\/?$/.exec(path);
+  if (match) return location.replace(match[1] + '/s/?k=' + match[2].toLowerCase());
+  match = /^(.*)\/kegiatan\/([0-9a-fA-F-]{36})\/?$/.exec(path);
+  if (match) return location.replace(match[1] + '/kegiatan/?id=' + match[2]);
+  document.addEventListener('DOMContentLoaded', function () {
+    // Situs proyek GitHub Pages berada di /<nama-repo>/.
+    var first = path.split('/')[1];
+    var home = /\.github\.io$/.test(location.hostname) && first ? '/' + first + '/' : '/';
+    document.getElementById('home').href = home;
+  });
+})();
+</script>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:64px auto;padding:0 16px;color:#172B3A;background:#F4F7FA}a{color:#006B70}</style>
+</head><body><h1>Halaman tidak ditemukan</h1><p>Alamat ini tidak tersedia.</p><p><a id="home" href="/">Lihat semua kegiatan</a></p></body></html>

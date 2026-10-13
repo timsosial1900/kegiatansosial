@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id" data-root="."><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Kegiatan Tim Sosial BPS Babel</title><link rel="stylesheet" href="./css/tokens.css"><link rel="stylesheet" href="./css/site.css"></head>
+<body data-page="directory">
+<a class="skip-link" href="#main-content">Lewati ke konten</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="./">Tim Sosial <span>BPS Kepulauan Bangka Belitung</span></a><nav aria-label="Navigasi utama"><a href="./" aria-current="page">Beranda</a><a href="./arsip/">Arsip</a><a class="admin-entry" href="#">Admin</a></nav></div></header>
+<main id="main-content" tabindex="-1"><div class="page-intro">
+<h1>Kegiatan Tim Sosial</h1>
+<p>Temukan jadwal, informasi, dan tautan kegiatan dalam satu tempat.</p>
+</div>
+<form id="directory-form" class="filters" method="get" data-scope="all">
+<div class="search-field"><label for="search">Cari kegiatan</label><input id="search" name="q" maxlength="200" type="search" placeholder="Judul atau deskripsi kegiatan"></div>
+<div><label for="status">Status waktu</label><select id="status" name="status"><option value="all">Semua status</option><option value="upcoming">Akan datang</option><option value="ongoing">Berlangsung</option><option value="finished">Selesai</option></select></div>
+<button class="primary" type="submit">Cari</button>
+<a class="reset" href="./" data-reset>Reset filter</a>
+</form>
+<p id="directory-feedback" role="status" aria-live="polite"></p>
+<button id="directory-retry" type="button" hidden>Coba lagi</button>
+<noscript><p class="empty-state">Portal ini memerlukan JavaScript untuk menampilkan kegiatan.</p></noscript>
+<div id="directory-results"></div></main>
+<footer class="site-footer">Portal kegiatan Tim Sosial · Semua jadwal dalam WIB</footer>
+<script src="./assets/config.js"></script><script src="./assets/vendor/qrcode.js"></script><script src="./assets/core.js"></script><script src="./assets/app.js"></script>
+</body></html>
