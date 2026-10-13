@@ -47,3 +47,5 @@ button:active,.button:active{transform:translateY(1px)}
 .admin-user{color:#d3e2ec;font-size:14px}
 .site-header nav button{background:transparent;color:white;border-color:#d3e2ec;min-height:40px;padding:6px 12px}
 @media(max-width:700px){.resource-grid{grid-template-columns:1fr}.admin-table thead{display:none}.admin-table td{display:block;border:0;padding:6px 12px}.admin-table tr{display:block;border-bottom:1px solid var(--border);padding:8px 0}}
+button.danger{color:#a32727;border-color:#a32727}
+button.danger:hover{background:#fff5f3}
