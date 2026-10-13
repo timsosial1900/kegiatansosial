@@ -210,6 +210,7 @@
       if (publication === 'published') actions.push(el('button', { type: 'button', text: 'Arsipkan', onclick: function () { if (confirm('Arsipkan kegiatan ini? Tidak dapat dikembalikan ke draf.')) save('archive'); } }));
     }
     if (event) actions.push(el('button', { type: 'button', text: 'Pratinjau', onclick: function () { preview(event.id); } }));
+    if (event) actions.push(el('button', { type: 'button', 'class': 'danger', text: 'Hapus', onclick: function () { remove(event); } }));
     $('editor-actions').replaceChildren.apply($('editor-actions'), actions);
     renderLinks(event);
     updateSlugPreview();
@@ -283,6 +284,23 @@
     $('reload-latest').hidden = !conflict || !state.current;
     $('error-summary').hidden = false;
     $('error-summary').focus();
+  }
+
+  function remove(event) {
+    var warning = event.publication === 'draft'
+      ? 'Hapus draf "' + (event.title || 'tanpa judul') + '"? Tindakan ini tidak dapat dibatalkan.'
+      : 'Hapus kegiatan "' + event.title + '"? Halaman kegiatan, shortlink, dan QR yang sudah dibagikan akan berhenti berfungsi. Tindakan ini tidak dapat dibatalkan.';
+    if (!confirm(warning) || state.saving) return;
+    state.saving = true;
+    setBusy(true);
+    status('Menghapus…');
+    call('delete', { id: event.id, version: event.version }).then(function (result) {
+      state.saving = false;
+      setBusy(false);
+      if (!result.ok) { status(''); return showErrors(result.errors, result.conflict); }
+      state.current = null;
+      return loadList().then(function () { status('Kegiatan dihapus.'); });
+    }).catch(fail);
   }
 
   function save(action) {
