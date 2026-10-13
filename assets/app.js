@@ -355,12 +355,8 @@
     });
   }
 
-  // Tautan "Admin" di header mengarah ke Web App admin bila sudah dikonfigurasi.
   var adminLink = document.querySelector('.admin-entry');
-  if (adminLink) {
-    if (CONFIG.ADMIN_URL && !/GANTI/.test(CONFIG.ADMIN_URL)) adminLink.href = CONFIG.ADMIN_URL;
-    else adminLink.remove();
-  }
+  if (adminLink) adminLink.href = ROOT + '/admin/';
 
   var page = document.body.getAttribute('data-page');
   if (page === 'directory') directoryPage();

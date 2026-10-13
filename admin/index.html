@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id" data-root=".."><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Admin Kegiatan Tim Sosial</title><link rel="stylesheet" href="../css/tokens.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/admin.css"></head>
+<body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="../">Admin Kegiatan <span>Tim Sosial BPS Kepulauan Bangka Belitung</span></a><nav aria-label="Navigasi admin"><a href="#" id="nav-list" hidden>Daftar kegiatan</a><span id="admin-user" class="admin-user"></span><button type="button" id="logout" hidden>Keluar</button></nav></div></header>
+<main id="main-content" tabindex="-1">
+  <p id="global-status" class="private-notice" role="status" hidden></p>
+
+  <section id="view-login" hidden style="margin-top:0">
+    <div class="login-panel">
+      <h1>Masuk admin</h1>
+      <p class="muted">Kata sandi diatur di Script Property <code>ADMIN_PASSWORD</code> pada Apps Script.</p>
+      <p id="login-error" class="error-summary" role="alert" hidden></p>
+      <form id="login-form">
+        <div class="field"><label for="login-name">Nama Anda</label><input id="login-name" maxlength="60" autocomplete="name" required></div>
+        <div class="field"><label for="login-password">Kata sandi</label><input id="login-password" type="password" maxlength="200" autocomplete="current-password" required></div>
+        <button class="primary" type="submit">Masuk</button>
+      </form>
+    </div>
+  </section>
+
+
+  <section id="view-list" aria-labelledby="list-heading" style="margin-top:0">
+    <div class="admin-toolbar"><h1 id="list-heading">Kegiatan</h1><button class="primary" type="button" id="new-event">Buat kegiatan</button></div>
+    <p class="muted">Draf hanya terlihat di sini. Kegiatan terbit dan arsip tampil di portal publik.</p>
+    <div id="event-table"></div>
+  </section>
+
+  <section id="view-editor" hidden style="margin-top:0">
+    <div id="editor-panel">
+      <div class="page-intro"><h1 id="editor-title">Buat kegiatan</h1><p class="publication" id="editor-publication">Publikasi: Draf</p><p class="muted" id="editor-meta"></p></div>
+      <div id="public-links" class="link-list" hidden></div>
+      <div id="error-summary" class="error-summary" tabindex="-1" hidden>
+        <h2>Perubahan belum tersimpan</h2><ul id="error-list"></ul>
+        <button type="button" id="reload-latest" hidden>Muat versi terbaru</button>
+      </div>
+      <p id="saved-notice" class="saved" role="status" hidden>Perubahan tersimpan.</p>
+      <form id="event-editor" novalidate>
+        <section class="editor-section"><h2>Informasi</h2><p class="muted">Judul dan deskripsi wajib sebelum terbit. Draf boleh belum lengkap.</p>
+          <div class="field"><label for="f-title">Judul</label><input id="f-title" name="title" maxlength="200"></div>
+          <div class="field"><label for="f-description">Deskripsi</label><textarea id="f-description" name="description" rows="6" maxlength="10000"></textarea></div>
+          <div class="field-pair">
+            <div class="field"><label for="f-mode">Mode</label><select id="f-mode" name="mode"><option value="">Belum ditentukan</option><option value="online">Daring</option><option value="offline">Luring</option><option value="hybrid">Hibrida</option></select></div>
+            <div class="field"><label for="f-location">Lokasi</label><input id="f-location" name="location" maxlength="300"></div>
+          </div>
+          <div class="field"><label for="f-slug">Shortlink kegiatan (opsional)</label><input id="f-slug" name="slug" maxlength="50" placeholder="contoh: rapat-oktober" autocapitalize="off" spellcheck="false"><p class="muted" id="slug-preview"></p></div>
+        </section>
+        <section class="editor-section"><h2>Jadwal WIB</h2><p class="muted">Kedua waktu wajib sebelum terbit. Waktu selesai harus setelah mulai.</p>
+          <div class="field-pair">
+            <div class="field"><label for="f-starts">Mulai (WIB)</label><input id="f-starts" name="starts_local" type="datetime-local"></div>
+            <div class="field"><label for="f-ends">Selesai (WIB)</label><input id="f-ends" name="ends_local" type="datetime-local"></div>
+          </div>
+        </section>
+        <section class="editor-section"><h2>Tautan</h2><p class="muted">Opsional, maksimum 30. Isi label, kategori, dan URL HTTPS. Shortlink tautan langsung membuka URL-nya (misalnya Zoom). Baris kosong seluruhnya diabaikan.</p>
+          <div id="resource-rows"></div>
+          <button type="button" id="add-resource">Tambah tautan</button>
+        </section>
+        <section class="publication-check"><h2>Periksa sebelum publikasi</h2>
+          <p>Seluruh informasi dan tautan yang diterbitkan dapat diakses publik. Jangan terbitkan data peserta, dokumen internal, kata sandi akun, atau token API.</p>
+          <p>Izin Zoom, presensi, dan Drive tetap dikelola layanan asal.</p>
+          <label class="check-label"><input type="checkbox" id="f-ack"> Saya memahami informasi ini akan dapat diakses publik.</label>
+          <p id="archive-note" hidden>Arsipkan tetap mempertahankan akses publik dan URL kegiatan. Kegiatan tidak dapat dikembalikan ke draf.</p>
+        </section>
+        <div class="editor-actions" id="editor-actions"></div>
+        <p class="muted">Pratinjau menampilkan versi terakhir yang disimpan.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="view-preview" hidden style="margin-top:0">
+    <p class="private-notice">Pratinjau admin. Draf tidak terlihat publik.</p>
+    <button type="button" id="preview-back">Kembali ke editor</button>
+    <div id="preview-body" style="margin-top:24px"></div>
+  </section>
+</main>
+<script src="../assets/config.js"></script><script src="../assets/admin.js"></script>
+</body></html>
