@@ -122,7 +122,10 @@
             el('td', { text: PUBLICATION_LABELS[event.publication] || event.publication }),
             el('td', { text: TIME_LABELS[event.time_status] }),
             el('td', { 'class': 'muted', text: formatWib(event.updated_at) }),
-            el('td', {}, [el('button', { type: 'button', text: 'Edit', onclick: function () { openEditor(event.id); } })])
+            el('td', {}, [el('div', { 'class': 'row-actions' }, [
+              el('button', { type: 'button', text: 'Lihat', onclick: function () { preview(event.id, 'list'); } }),
+              el('button', { type: 'button', text: 'Edit', onclick: function () { openEditor(event.id); } })
+            ])])
           ]);
         }) : [el('tr', {}, [el('td', { colspan: '5', text: 'Belum ada kegiatan.' })])])
       ]);
@@ -209,7 +212,7 @@
       actions.push(el('button', { 'class': 'primary', type: 'button', text: 'Simpan perubahan publik', onclick: function () { save('save_public'); } }));
       if (publication === 'published') actions.push(el('button', { type: 'button', text: 'Arsipkan', onclick: function () { if (confirm('Arsipkan kegiatan ini? Tidak dapat dikembalikan ke draf.')) save('archive'); } }));
     }
-    if (event) actions.push(el('button', { type: 'button', text: 'Pratinjau', onclick: function () { preview(event.id); } }));
+    if (event) actions.push(el('button', { type: 'button', text: 'Pratinjau', onclick: function () { preview(event.id, 'editor'); } }));
     if (event) actions.push(el('button', { type: 'button', 'class': 'danger', text: 'Hapus', onclick: function () { remove(event); } }));
     $('editor-actions').replaceChildren.apply($('editor-actions'), actions);
     renderLinks(event);
@@ -320,10 +323,19 @@
     }).catch(fail);
   }
 
-  function preview(id) {
+  function preview(id, from) {
     status('Memuat pratinjau…');
     call('get', { id: id }).then(function (event) {
       status('');
+      if (!event) return status('Kegiatan tidak ditemukan.');
+      state.previewFrom = from;
+      $('preview-back').textContent = from === 'list' ? 'Kembali ke daftar' : 'Kembali ke editor';
+      $('preview-notice').textContent = event.publication === 'draft'
+        ? 'Pratinjau admin. Draf ini belum terlihat publik.'
+        : 'Tampilan seperti di situs publik.';
+      var publicLink = $('preview-public');
+      publicLink.hidden = event.publication === 'draft' || !state.siteUrl;
+      publicLink.href = eventUrl(event.id);
       var resources = event.resources.length ? event.resources.map(function (resource) {
         return el('a', { 'class': 'resource-link', href: resource.url, target: '_blank', rel: 'noopener noreferrer', text: resource.label + ' (' + (CATEGORY_LABELS[resource.category] || resource.category) + ')' });
       }) : [el('p', { 'class': 'empty-state', text: 'Tautan kegiatan belum tersedia' })];
@@ -346,7 +358,9 @@
   $('new-event').addEventListener('click', function () { openEditor(null); });
   $('add-resource').addEventListener('click', function () { $('resource-rows').appendChild(resourceRow()); numberRows(); });
   $('reload-latest').addEventListener('click', function () { openEditor(state.current.id); });
-  $('preview-back').addEventListener('click', function () { show('editor'); });
+  $('preview-back').addEventListener('click', function () {
+    if (state.previewFrom === 'list') loadList(); else show('editor');
+  });
   $('f-slug').addEventListener('input', updateSlugPreview);
   try { $('login-name').value = localStorage.getItem('portal.admin.name') || ''; } catch (e) { /* abaikan */ }
   if (token()) {
