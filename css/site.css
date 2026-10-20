@@ -1,22 +1,19 @@
-* {
-  box-sizing:border-box}
+/* Portal Kegiatan Tim Sosial: tampilan publik (juga dipakai halaman admin). */
+* {box-sizing:border-box}
 html {
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:var(--font);
   color:var(--text);
   background:var(--canvas);
-  font-size:16px;
-  line-height:1.5;
-  scrollbar-color:var(--muted) var(--canvas)}
-body {
-  margin:0}
-::selection {
-  background:var(--teal);
-  color:white}
-a {
-  color:var(--teal);
-  text-underline-offset:3px}
-a:hover {
-  text-decoration-thickness:2px}
+  line-height:1.55;
+  -webkit-text-size-adjust:100%;
+  scrollbar-color:var(--control-border) var(--canvas)}
+body {margin:0;min-height:100vh;display:flex;flex-direction:column}
+main {flex:1}
+::selection {background:var(--teal);color:#fff}
+a {color:var(--teal);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover {text-decoration-thickness:2px}
+svg.icon {width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
 button,input,select {
   font:inherit;
   min-height:44px;
@@ -24,342 +21,243 @@ button,input,select {
   border:1px solid var(--control-border);
   padding:10px 14px;
   color:var(--text);
-  background:white}
-button {
-  cursor:pointer}
-button:hover,.resource-link:hover {
-  background:var(--tint)}
-input {
-  width:100%;
-  caret-color:var(--teal)}
-input::placeholder {
-  color:var(--muted)}
-:focus-visible {
-  outline:3px solid var(--teal);
-  outline-offset:3px}
-[hidden] {
-  display:none!important}
-.site-header {
-  background:var(--navy);
-  color:white}
+  background:#fff}
+button {cursor:pointer;font-weight:700;transition:background-color .15s var(--ease),border-color .15s var(--ease),box-shadow .15s var(--ease)}
+button:hover {background:var(--tint)}
+input {width:100%;caret-color:var(--teal)}
+input::placeholder {color:var(--muted)}
+:focus-visible {outline:3px solid var(--teal);outline-offset:3px}
+[hidden] {display:none!important}
+.visually-hidden {position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ------------------------------------------------------------ Header */
+.site-header {background:var(--navy);color:#fff}
 .header-inner {
-  max-width:1120px;
-  margin:auto;
-  padding:20px 32px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px}
-.brand {
-  color:white;
-  font-size:20px;
-  font-weight:700;
-  text-decoration:none;
-  line-height:1.3}
-.brand span {
-  display:block;
-  font-size:13px;
-  font-weight:400;
-  margin-top:4px;
-  color:#d3e2ec}
-nav {
-  display:flex;
-  align-items:center;
-  gap:12px}
+  max-width:1120px;margin:auto;padding:18px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand {color:#fff;font-size:1.1875rem;font-weight:700;text-decoration:none;line-height:1.25}
+.brand span {display:block;font-size:0.8125rem;font-weight:400;margin-top:3px;color:var(--on-navy-muted)}
+nav {display:flex;align-items:center;gap:8px}
 .site-header nav a {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  color:white;
-  padding:10px 12px;
-  text-decoration:none;
-  border-radius:8px}
-.site-header nav a[aria-current] {
-  background:#29475c;
-  text-decoration:underline}
-.site-header :focus-visible {
-  outline-color:white}
-.admin-entry {
-  font-size:14px}
-main {
-  max-width:1120px;
-  margin:auto;
-  padding:32px;
-  min-height:70vh}
-h1,h2,h3 {
-  color:var(--navy);
-  margin:0;
-  line-height:1.3;
-  overflow-wrap:anywhere}
-h1 {
-  font-size:32px;
-  letter-spacing:-.02em;
-  text-wrap:balance}
-h2 {
-  font-size:22px}
-h3 {
-  font-size:18px}
-p {
-  margin:12px 0}
-.page-intro {
-  margin-bottom:24px}
-.page-intro p,.muted,.site-footer {
-  color:var(--muted)}
+  display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;
+  color:#fff;text-decoration:none;border-radius:var(--control-radius);
+  transition:background-color .15s var(--ease)}
+.site-header nav a:hover {background:var(--navy-line)}
+.site-header nav a[aria-current] {background:var(--navy-line);box-shadow:inset 0 -3px 0 var(--teal-line)}
+.site-header :focus-visible {outline-color:#fff}
+.admin-entry {font-size:0.875rem;color:var(--on-navy-muted)!important}
+
+/* ------------------------------------------------------------ Layout */
+main {width:100%;max-width:1120px;margin:0 auto;padding:32px 32px 56px}
+h1,h2,h3 {color:var(--navy);margin:0;line-height:1.25;overflow-wrap:anywhere;text-wrap:balance}
+h1 {font-size:clamp(1.75rem,4vw,2.375rem);letter-spacing:-.015em}
+h2 {font-size:1.375rem}
+h3 {font-size:1.125rem}
+p {margin:12px 0}
+.muted,.site-footer {color:var(--muted)}
+.loading {color:var(--muted)}
+section {margin-top:40px}
+
+/* Beranda & arsip: judul di atas pita navy, kotak pencarian menumpang batasnya. */
+[data-page=directory] .site-header {padding-bottom:200px}
+[data-page=directory] main {padding-top:0}
+/* Latar navy ikut dilukis di belakang judul agar kontras tetap aman walau teks diperbesar. */
+.page-intro {margin:-192px 0 0;color:#fff;background:var(--navy);box-shadow:0 0 0 100vmax var(--navy);clip-path:inset(0 -100vmax)}
+.page-intro h1 {color:#fff}
+.page-intro p {color:var(--on-navy-muted);margin:8px 0 0;max-width:60ch;font-size:1.0625rem}
+
 .filters {
-  display:flex;
-  align-items:end;
-  gap:12px;
-  padding:20px;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:20px}
-.filters label {
-  display:block;
-  font-weight:600;
-  margin-bottom:8px}
-.search-field {
-  flex:1;
-  min-width:0}
-.filters select {
-  width:100%}
-.primary {
-  background:var(--teal);
-  color:white;
-  border-color:var(--teal)}
-.primary:hover {
-  background:#005459;
-  color:white}
-.reset {
-  padding:10px;
-  min-height:44px;
-  display:inline-flex;
-  align-items:center}
-section {
-  margin-top:32px}
-.nearest-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:16px;
-  margin-top:16px}
+  margin:28px 0 8px;padding:20px 24px 16px;
+  background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-lg)}
+.search-row {display:flex;align-items:end;gap:12px}
+.search-field {flex:1;min-width:0}
+.search-field label {display:block;font-weight:700;margin-bottom:8px}
+.search-input {position:relative}
+.search-input svg {position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search-input input {padding-left:44px;min-height:48px}
+.search-row button {min-height:48px;padding:10px 24px}
+.status-filter {border:0;margin:14px 0 0;padding:0;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.status-filter legend {float:left;font-weight:700;font-size:0.875rem;color:var(--muted);margin-right:4px;padding:0}
+.chip {position:relative;display:inline-flex}
+.chip input {position:absolute;inset:0;opacity:0;margin:0;min-height:0;cursor:pointer}
+.chip span {
+  display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;
+  border:1px solid var(--border-strong);border-radius:999px;font-size:0.9375rem;
+  background:#fff;transition:background-color .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease)}
+.chip input:hover+span {border-color:var(--control-border)}
+.chip input:checked+span {background:var(--navy);border-color:var(--navy);color:#fff;font-weight:700}
+.chip input:focus-visible+span {outline:3px solid var(--teal);outline-offset:2px}
+.reset {display:inline-flex;align-items:center;min-height:44px;padding:8px 4px;margin-left:auto;font-size:0.9375rem}
+
+.primary {background:var(--teal);color:#fff;border-color:var(--teal)}
+.primary:hover {background:var(--teal-strong);border-color:var(--teal-strong);color:#fff}
+
+#directory-feedback {color:var(--muted)}
+#directory-feedback:empty {display:none}
+#directory-retry {margin-top:4px}
+
+/* ------------------------------------------------------------ Kartu kegiatan */
+.section-heading {display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px}
+.section-heading p {color:var(--muted);margin:0;font-variant-numeric:tabular-nums}
+#nearest-events h2 {margin-bottom:16px}
+.nearest-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.event-list {display:grid;gap:12px}
+
 .event-card {
-  background:white;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:24px;
-  min-width:0}
-.event-meta {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:12px}
+  position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);column-gap:18px;align-items:start;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;min-width:0;box-shadow:var(--shadow-sm);
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),transform .2s var(--ease)}
+.event-card:hover {border-color:var(--border-strong);box-shadow:var(--shadow);transform:translateY(-2px)}
+.event-card:focus-within {border-color:var(--teal)}
+.event-card>:not(.date-tile) {grid-column:2}
+.date-tile {
+  grid-row:1/span 4;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:64px;height:68px;border-radius:12px;background:var(--canvas);color:var(--navy);line-height:1}
+.date-tile .day {font-size:1.625rem;font-weight:700;font-variant-numeric:tabular-nums}
+.date-tile .month {font-size:0.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:5px;color:var(--muted)}
+.event-card.is-ongoing .date-tile {background:var(--tint);color:var(--teal)}
+.event-card.is-ongoing .date-tile .month {color:var(--teal)}
+.event-card.is-finished .date-tile {opacity:.75}
+.event-meta {display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.event-card h3 {font-size:1.125rem}
+.event-card h3 a {color:var(--navy);text-decoration:none}
+/* Seluruh kartu dapat diklik; tautan tetap satu (judul). */
+.event-card h3 a::after {content:"";position:absolute;inset:0;border-radius:var(--radius)}
+.event-card h3 a:focus-visible {outline:none}
+.event-card h3 a:focus-visible::after {outline:3px solid var(--teal);outline-offset:2px}
+.event-card:hover h3 a {text-decoration:underline;text-decoration-thickness:2px}
+.facts {list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px;color:var(--muted);font-size:0.9375rem}
+.facts li {display:flex;align-items:flex-start;gap:8px;min-width:0;overflow-wrap:anywhere}
+.facts svg.icon {width:18px;height:18px;margin-top:2px;color:var(--control-border)}
+.facts time {font-variant-numeric:tabular-nums}
+
 .status {
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  color:var(--navy);
-  background:#eaf0f5}
-.status-ongoing {
-  color:var(--teal);
-  background:var(--tint)}
-.status-finished {
-  color:var(--muted);
-  background:#edf1f4}
-.event-card h2 a,.event-card h3 a {
-  display:flex;
-  align-items:center;
-  min-height:44px;
-  color:var(--navy);
-  text-decoration:none}
-.event-card h3 a:hover {
-  text-decoration:underline}
-.schedule {
-  font-variant-numeric:tabular-nums;
-  color:var(--muted);
-  font-size:14px;
-  overflow-wrap:anywhere}
-.detail-link {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  min-height:44px;
-  font-weight:600;
-  margin-top:8px}
-.section-heading {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:16px}
-.section-heading p {
-  color:var(--muted);
-  margin:0}
-.event-list {
-  display:grid;
-  gap:12px}
-.pagination {
-  justify-content:center;
-  margin:24px 0;
-  flex-wrap:wrap}
-.pagination a {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  padding:8px 12px;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:8px}
-.empty-state {
-  padding:32px;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:12px}
-.site-footer {
-  max-width:1120px;
-  margin:auto;
-  padding:24px 32px;
-  border-top:1px solid var(--border);
-  font-size:14px}
-.skip-link {
-  position:absolute;
-  left:16px;
-  top:-100px;
-  padding:12px;
-  background:white;
-  z-index:2}
-.skip-link:focus {
-  top:12px}
-.back-link {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  margin-bottom:20px}
-.detail-heading {
-  margin-bottom:32px}
-.detail-heading h1 {
-  margin-top:16px;
-  max-width:28ch}
-.detail-heading .schedule {
-  font-size:16px}
-.detail-layout {
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 280px;
-  gap:48px}
-.description {
-  max-width:72ch;
-  overflow-wrap:anywhere}
-.resources {
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin:16px 0}
-.resource-link {
-  display:block;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:14px 18px;
-  font-weight:600;
-  min-height:44px;
-  text-decoration:none;
-  overflow-wrap:anywhere}
-.access p {
-  color:var(--muted);
-  font-size:14px}
-.sharing {
-  border-top:1px solid var(--border);
-  padding-top:24px}
-.sharing h2 {
-  font-size:18px}
-.sharing p {
-  font-size:14px;
-  color:var(--muted)}
-.sharing img {
-  display:block;
-  max-width:100%;
-  height:auto;
-  margin:16px 0}
-.permanent-url {
-  display:block;
-  min-height:44px;
-  overflow-wrap:anywhere;
-  font-size:14px;
-  margin:16px 0}
-.download-link {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px}
-.sharing button {
-  width:100%}
-#directory-feedback {
-  color:var(--muted)}
-#directory-feedback:empty {
-  display:none}
-[aria-busy=true] {
-  opacity:.65}
-@media(max-width:850px) {
-  .nearest-grid {
-  grid-template-columns:1fr}
-.filters {
-  flex-wrap:wrap}
-.search-field {
-  flex-basis:100%}
-.detail-layout {
-  grid-template-columns:1fr}
-.sharing {
-  max-width:400px}
-.header-inner {
-  flex-wrap:wrap}
-}
-@media(max-width:480px) {
-  main {
-  padding:24px 16px}
-.header-inner {
-  padding:16px;
-  gap:12px}
-.site-header nav {
-  gap:4px;
-  width:100%;
-  justify-content:space-between}
-.site-header nav a {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  padding:10px}
-h1 {
-  font-size:24px}
-h2 {
-  font-size:20px}
-.filters {
-  padding:16px}
-.filters>div {
-  width:100%}
-.filters button {
-  flex:1}
-.event-card {
-  padding:20px}
-.section-heading {
-  align-items:start}
-.site-footer {
-  padding:24px 16px}
-.detail-layout {
-  gap:32px}
-}
+  display:inline-flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;
+  font-size:0.8125rem;font-weight:700;letter-spacing:.01em;color:var(--upcoming);background:var(--upcoming-bg)}
+.status::before {content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.status-ongoing {color:var(--teal);background:var(--tint)}
+.status-ongoing::before {box-shadow:0 0 0 0 rgba(0,107,112,.5);animation:pulse 2s var(--ease) infinite}
+.status-finished {color:var(--muted);background:var(--finished-bg)}
+.status-finished::before {background:transparent;border:1.5px solid currentColor;width:5px;height:5px}
+.archive-tag {font-size:0.8125rem;color:var(--muted)}
+@keyframes pulse {0%{box-shadow:0 0 0 0 rgba(0,107,112,.45)}70%{box-shadow:0 0 0 7px rgba(0,107,112,0)}100%{box-shadow:0 0 0 0 rgba(0,107,112,0)}}
 
-/* Denser repeated results retain full titles and independent 44px links. */
+/* Daftar hasil: baris lebih padat. */
 .results .event-card {padding:16px 20px}
-.results .event-meta {margin-bottom:4px}
-.results .event-card p {margin:4px 0;overflow-wrap:anywhere}
-.results .detail-link {margin-top:0}
-@media(min-width:851px) {
-  .results .event-card {display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px}
-  .results .event-card>:not(.detail-link) {grid-column:1}
-  .results .detail-link {grid-column:2;grid-row:1/5;align-self:center}
+.results .date-tile {height:60px}
+.results .facts {display:flex;flex-wrap:wrap;gap:4px 20px;margin-top:8px}
+
+.skeleton {pointer-events:none}
+.skeleton .bar {display:block;height:14px;border-radius:6px;background:linear-gradient(90deg,var(--skeleton) 0%,var(--skeleton-hi) 50%,var(--skeleton) 100%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.skeleton .bar+.bar {margin-top:10px}
+.skeleton .date-tile {background:var(--skeleton)}
+@keyframes shimmer {from{background-position:200% 0}to{background-position:-200% 0}}
+
+.pagination {display:flex;align-items:center;justify-content:center;gap:12px;margin:28px 0 0;flex-wrap:wrap;color:var(--muted)}
+.pagination a {
+  display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;font-weight:700;
+  background:#fff;border:1px solid var(--border);border-radius:var(--control-radius);text-decoration:none}
+.pagination a:hover {border-color:var(--control-border)}
+.empty-state {padding:32px;background:var(--surface);border:1px dashed var(--border-strong);border-radius:var(--radius);text-align:center}
+.empty-state h1,.empty-state h3 {margin-bottom:4px}
+.empty-state p {color:var(--muted);margin:4px 0 0}
+.empty-state a,.empty-state button {margin-top:16px}
+
+.site-footer {
+  width:100%;max-width:1120px;margin:0 auto;padding:24px 32px 32px;
+  border-top:1px solid var(--border);font-size:0.875rem}
+.skip-link {position:absolute;left:16px;top:-100px;padding:12px 16px;background:#fff;border-radius:var(--control-radius);z-index:2;font-weight:700}
+.skip-link:focus {top:12px}
+
+/* ------------------------------------------------------------ Detail kegiatan */
+.back-link {display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-bottom:12px;font-weight:700;text-decoration:none}
+.back-link:hover {text-decoration:underline}
+.detail-heading {margin-bottom:28px}
+.detail-heading h1 {margin-top:12px;max-width:28ch}
+.detail-heading .facts {margin-top:16px;font-size:1rem;color:var(--text);display:flex;flex-wrap:wrap;gap:8px 28px}
+.detail-heading .facts svg.icon {color:var(--teal)}
+.detail-heading .schedule {font-size:1rem}
+.schedule {font-variant-numeric:tabular-nums;color:var(--muted);font-size:0.875rem;overflow-wrap:anywhere}
+.detail-layout {display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:start}
+.panel {background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm)}
+.panel+.panel {margin-top:20px}
+.panel h2 {font-size:1.1875rem}
+section.panel {margin-top:0}
+.description {max-width:68ch;overflow-wrap:anywhere;white-space:pre-line;margin-top:12px}
+.access>p {color:var(--muted);font-size:0.875rem;margin:6px 0 0}
+.resources {display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.resource-link {
+  display:flex;align-items:center;gap:12px;min-height:52px;padding:12px 16px;
+  border:1px solid var(--border);border-radius:var(--control-radius);
+  font-weight:700;text-decoration:none;color:var(--navy);overflow-wrap:anywhere;
+  transition:background-color .15s var(--ease),border-color .15s var(--ease)}
+.resource-link:hover {background:var(--tint);border-color:var(--teal-line)}
+.resource-link .label {flex:1;min-width:0}
+.resource-link svg.icon {color:var(--teal)}
+.resource-link .ext {width:16px;height:16px;color:var(--muted)}
+.resource-link.primary {min-height:56px;font-size:1.0625rem;color:#fff;background:var(--teal);border-color:var(--teal);box-shadow:0 6px 16px -6px rgba(0,107,112,.55)}
+.resource-link.primary svg.icon,.resource-link.primary .ext {color:#fff}
+.resource-link.primary:hover {background:var(--teal-strong);border-color:var(--teal-strong)}
+.access-note {font-size:0.875rem;color:var(--muted);margin:0}
+
+.sharing {position:sticky;top:24px}
+.sharing h2 {font-size:1.125rem}
+.sharing>p {font-size:0.875rem;color:var(--muted);margin:6px 0 0}
+.qr {display:block;width:184px;max-width:100%;margin:16px auto;padding:8px;background:#fff;border:1px solid var(--border);border-radius:12px}
+.qr svg {display:block;width:100%;height:auto}
+.link-field {display:flex;align-items:center;gap:8px;margin:8px 0;padding:6px 6px 6px 12px;border:1px solid var(--border);border-radius:var(--control-radius);background:var(--canvas)}
+.link-field .permanent-url {flex:1;min-width:0;margin:0;min-height:0;font-size:0.875rem;font-weight:700;overflow-wrap:anywhere}
+.permanent-url {display:block;overflow-wrap:anywhere;font-size:0.875rem}
+.link-caption {font-size:0.8125rem;color:var(--muted);margin:14px 0 0}
+.sharing-actions {display:grid;gap:8px;margin-top:16px}
+.sharing-actions button {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 12px;
+  border:1px solid var(--control-border);border-radius:var(--control-radius);font-size:0.9375rem;font-weight:700;
+  background:#fff;color:var(--text);text-decoration:none}
+.sharing-actions svg.icon {width:18px;height:18px}
+#copy-feedback {font-size:0.875rem;color:var(--teal);font-weight:700;margin:8px 0 0}
+#copy-feedback:empty {display:none}
+
+
+[aria-busy=true] {cursor:progress}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {transition-duration:.01ms!important}
+  .event-card:hover {transform:none}
+  .status-ongoing::before,.skeleton .bar {animation:none}
 }
 
-/* Tambahan versi statis. */
-.description{white-space:pre-line}
-.qr{display:block;width:200px;max-width:100%;margin:16px 0}
-.qr svg{display:block;width:100%;height:auto}
-.loading{color:var(--muted)}
+@media(max-width:900px) {
+  .nearest-grid {grid-template-columns:1fr 1fr}
+  .detail-layout {grid-template-columns:1fr;gap:20px}
+  .sharing {position:static}
+  .header-inner {flex-wrap:wrap}
+}
+@media(max-width:640px) {
+  main {padding:24px 16px 40px}
+  .header-inner {padding:14px 16px;gap:8px}
+  .site-header nav {gap:4px;width:100%}
+  .site-header nav .admin-entry {margin-left:auto}
+  [data-page=directory] .site-header {padding-bottom:168px}
+  .page-intro {margin-top:-160px}
+  .page-intro p {font-size:1rem}
+  .nearest-grid {grid-template-columns:1fr}
+  .filters {padding:16px;margin-top:20px}
+  .search-row {flex-wrap:wrap}
+  .search-row button {flex:1 1 100%}
+  .status-filter legend {float:none;width:100%;margin-bottom:2px}
+  .reset {margin-left:0}
+  .event-card {grid-template-columns:52px minmax(0,1fr);column-gap:14px;padding:16px}
+  .date-tile {width:52px;height:58px}
+  .date-tile .day {font-size:1.375rem}
+  .results .event-card {padding:14px 16px}
+  .results .date-tile {height:54px}
+  .panel {padding:20px}
+  .site-footer {padding:24px 16px}
+}
+
+.skeleton-heading {width:200px;height:22px!important;margin:40px 0 16px}
+.skeleton-grid .event-card {min-height:150px}
+.skeleton .panel .bar+.bar {margin-top:10px}
+.empty-state button {margin-top:16px}

@@ -1,1 +1,15 @@
-:root{--navy:#123047;--teal:#006B70;--canvas:#F4F7FA;--surface:#fff;--text:#172B3A;--muted:#526575;--border:#d5dfe5;--control-border:#7a8d9a;--tint:#e9f4f3;--radius:12px;--control-radius:8px}
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
+:root{
+  --navy:#123047;--navy-deep:#0C2436;--navy-line:#2A4A61;
+  --teal:#006B70;--teal-strong:#00565A;--tint:#E4F1F0;
+  --canvas:#F3F6F9;--surface:#fff;--text:#172B3A;--muted:#4D6070;--on-navy-muted:#C9DAE6;
+  --border:#D6DFE6;--border-strong:#A9BBC8;--teal-line:#8FCFCB;--skeleton:#E6ECF1;--skeleton-hi:#F2F5F8;--control-border:#7A8D9A;
+  --upcoming:#1D4F7A;--upcoming-bg:#E7EFF7;--finished-bg:#ECEFF2;
+  --danger:#A32727;--danger-bg:#FFF5F3;
+  --radius:14px;--control-radius:10px;
+  --shadow-sm:0 1px 2px rgba(18,48,71,.06);
+  --shadow:0 1px 2px rgba(18,48,71,.05),0 6px 16px -4px rgba(18,48,71,.10);
+  --shadow-lg:0 2px 4px rgba(18,48,71,.06),0 16px 32px -8px rgba(18,48,71,.18);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --font:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
