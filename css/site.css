@@ -62,9 +62,11 @@ section {margin-top:40px}
 [data-page=directory] .site-header {padding-bottom:200px}
 [data-page=directory] main {padding-top:0}
 /* Latar navy ikut dilukis di belakang judul agar kontras tetap aman walau teks diperbesar. */
-.page-intro {margin:-192px 0 0;color:#fff;background:var(--navy);box-shadow:0 0 0 100vmax var(--navy);clip-path:inset(0 -100vmax)}
-.page-intro h1 {color:#fff}
-.page-intro p {color:var(--on-navy-muted);margin:8px 0 0;max-width:60ch;font-size:1.0625rem}
+.page-intro {margin-bottom:24px}
+.page-intro p {color:var(--muted)}
+[data-page=directory] .page-intro {margin:-192px 0 0;color:#fff;background:var(--navy);box-shadow:0 0 0 100vmax var(--navy);clip-path:inset(0 -100vmax)}
+[data-page=directory] .page-intro h1 {color:#fff}
+[data-page=directory] .page-intro p {color:var(--on-navy-muted);margin:8px 0 0;max-width:60ch;font-size:1.0625rem}
 
 .filters {
   margin:28px 0 8px;padding:20px 24px 16px;
@@ -240,8 +242,8 @@ section.panel {margin-top:0}
   .site-header nav {gap:4px;width:100%}
   .site-header nav .admin-entry {margin-left:auto}
   [data-page=directory] .site-header {padding-bottom:168px}
-  .page-intro {margin-top:-160px}
-  .page-intro p {font-size:1rem}
+  [data-page=directory] .page-intro {margin-top:-160px}
+  [data-page=directory] .page-intro p {font-size:1rem}
   .nearest-grid {grid-template-columns:1fr}
   .filters {padding:16px;margin-top:20px}
   .search-row {flex-wrap:wrap}
