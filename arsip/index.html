@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id" data-root=".."><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Arsip kegiatan</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="../css/tokens.css"><link rel="stylesheet" href="../css/site.css"></head>
+<html lang="id" data-root=".."><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://script.google.com" crossorigin><link rel="preconnect" href="https://script.googleusercontent.com" crossorigin><title>Arsip kegiatan</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="../css/tokens.css"><link rel="stylesheet" href="../css/site.css"></head>
 <body data-page="directory">
 <a class="skip-link" href="#main-content">Lewati ke konten</a>
 <header class="site-header"><div class="header-inner"><a class="brand" href="../">Tim Sosial <span>BPS Kepulauan Bangka Belitung</span></a><nav aria-label="Navigasi utama"><a href="../">Beranda</a><a href="../arsip/" aria-current="page">Arsip</a><a class="admin-entry" href="#">Admin</a></nav></div></header>
@@ -12,13 +12,9 @@
 <div class="search-field"><label for="search">Cari kegiatan</label><div class="search-input"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="search" name="q" maxlength="200" type="search" placeholder="Contoh: rapat koordinasi, pelatihan" autocomplete="off"></div></div>
 <button class="primary" type="submit">Cari</button>
 </div>
-<fieldset class="status-filter"><legend>Status</legend>
-<label class="chip"><input type="radio" name="status" value="all" checked><span>Semua</span></label>
-<label class="chip"><input type="radio" name="status" value="upcoming"><span>Akan datang</span></label>
-<label class="chip"><input type="radio" name="status" value="ongoing"><span>Berlangsung</span></label>
-<label class="chip"><input type="radio" name="status" value="finished"><span>Selesai</span></label>
-<a class="reset" href="./" data-reset hidden>Hapus filter</a>
-</fieldset>
+<!-- Arsip hanya berisi kegiatan selesai/diarsipkan, jadi tidak perlu filter status. -->
+<input type="hidden" name="status" value="all">
+<a class="reset" href="./" data-reset hidden>Hapus pencarian</a>
 </form>
 <p id="directory-feedback" role="status" aria-live="polite"></p>
 <button id="directory-retry" type="button" hidden>Coba lagi</button>
